@@ -1,0 +1,25 @@
+@media only screen and (min-width: 481px) and (max-width: 1023px) {
+    :root {
+        --normal-text-font: 'Rajdhani';
+        --header-text-font: 'Limelight';
+        --elevator-text-font: 'Limelight';
+    
+        --header-text-color: #241414; /**/
+        --frame-color: #241414; /*#*/
+    
+        --background-metal-color: #f1bb69; /*#*/
+        --background-floor-color: #ebe2c8; /*#*/
+        --background-floor-lighter-color: #ebc68d;/*#*/
+    
+        --background-table-hover:#ffbf58; /*#*/
+    
+        --normal-text-color: #1F1F1F; /*#*/
+    
+        --elevator-text-color: #241414; /*#*/
+        --elevator-text-selected-color: #ebc68d; /* */
+        --elevator-bg-selected-color: #241414; /*#*/
+
+        --link-visited: #493557;
+        --link: #8c00ff;
+    }
+}

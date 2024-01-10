@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Kay - Home</title>
+<style>
+    .parent {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(5, 1fr);
+        grid-column-gap: 0px;
+        grid-row-gap: 0px;
+    }
+
+    .div1 { grid-area: 1 / 1 / 2 / 3; }
+    .div2 { grid-area: 2 / 1 / 3 / 3; }
+    .div3 { grid-area: 3 / 1 / 4 / 2; }
+    .div4 { grid-area: 3 / 2 / 4 / 3; }
+    .div5 { grid-area: 4 / 1 / 5 / 3; }
+    .div6 { grid-area: 5 / 2 / 6 / 3; }
+</style>
+</head>
+<body>
+<div class="parent">
+    <div class="div1"> </div>
+    <div class="div2"> </div>
+    <div class="div3"> </div>
+    <div class="div4"> </div>
+    <div class="div5"> </div>
+    <div class="div6"> </div>
+</div>
+</body>
