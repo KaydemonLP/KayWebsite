@@ -177,7 +177,10 @@ function startSite()
 
 	// Get the offset position of the navbar
 	if( g_navbar )
+	{
 		g_sticky = g_navbar.offsetTop;
+		fetch( "/templates/navbar.html" ).then( (response) => response.text().then((text) => g_navbar.innerHTML = text));
+	}
 
 	if ( platform.indexOf('ipad') != -1  ||  platform.indexOf('iphone') != -1 )
 	{

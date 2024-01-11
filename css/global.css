@@ -82,6 +82,9 @@ h1, h2, h3 {
 	font-weight: 300;
 }
 
+html, body { min-height: 100%; }
+
+
 html {
 	color: var(--normal-text-color);
 	font-family: var(--normal-text-font), var(--header-text-font);
@@ -148,6 +151,7 @@ main{
 	background-color: var(--background-main-color);
 	position: relative;
 	z-index: 15;
+	height: -webkit-fill-available;
 }
 
 #page {
@@ -157,6 +161,17 @@ main{
     margin-left: auto;
     margin-right: auto;
 }
+
+#aboutMe {
+	display:grid;
+	grid-template-columns: 48% 4% 48%;
+	grid-column-gap: 0px;
+	grid-row-gap: 0px;
+}
+
+#aboutMe h1 { grid-area: 1 / 1 / 2 / 4; }
+#aboutMe h1 + p { grid-area: 2 / 1 / 3 / 2; }
+#aboutMe h1 + p + p { grid-area: 2 / 3 / 3 / 3; }
 
 
 /* PARALLAX */
@@ -304,12 +319,14 @@ main{
 
 .preview_date {
 	justify-self: left;
+	align-self: center;
 	padding-left: 10px;
 	grid-area: 3 / 1 / 4 / 2;
 }
 
 .preview_tags {
 	justify-self: right;
+	align-self: center;
 	padding-right: 10px;
 	grid-area: 3 / 2 / 4 / 3;
 }
@@ -319,19 +336,22 @@ main{
 }
 
 .preview_content {
-	width: 100%;
+	width: 90%;
 	overflow: hidden;
 	position: relative;
 	line-height: 1.1em;
 	text-align: justify;
 	grid-area: 4 / 1 / 5 / 3;
 	background: inherit;
+	padding: 0% 5%;
 }
 
 .preview_content:before {
 	content: '...';
     position: absolute;
-    right: 0;
+    right: 5%;
+    width: 1em;
+    height: 1em;
     bottom: 0;
     z-index: 1;
 }
@@ -339,7 +359,7 @@ main{
 .preview_content:after {
     content: '';
     position: absolute;
-    right: 0;
+    right: 5%;
     bottom: 0;
     width: 1em;
     height: 1em;
@@ -350,4 +370,8 @@ main{
 .preview_readmore {
 	text-align: right;
 	grid-area: 5 / 2 / 6 / 3;
+}
+
+#frog_video {
+	width: calc(90vw - 32px);
 }
