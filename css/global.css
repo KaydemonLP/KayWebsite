@@ -9,7 +9,7 @@ a, a:link, a:visited { color: inherit; text-decoration: inherit; }
     --normal-text-font: 'Rajdhani';
     --header-text-font: 'Limelight';
 
-    --header-text-color: #ffbf58;
+    --header-text-color: #EEDDA8;
 
     --background-main-color: #100021;
     --background-main-lighter: #AA2CEB;
@@ -195,6 +195,129 @@ main{
 #aboutMe h1 + p { grid-area: 2 / 1 / 3 / 2; }
 #aboutMe h1 + p + p { grid-area: 2 / 3 / 3 / 3; }
 
+#aboutMe #writeMe {
+	grid-area: 3 / 1 / 4 / 4;
+
+	display: grid;
+    grid-template-columns: 37.5% 25% 37.5%;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+
+	align-items: center;
+	justify-items: center;
+}
+
+#aboutMe img {
+	width: 100%;
+}
+
+#aboutMe button {
+	border-width: 0px;
+    border-style: none;
+    border-color: none;
+    border-image: none;
+
+	width: 80%;
+
+	letter-spacing: 4px;
+	font-family: var(--header-text-font);
+	font-size: 100%;
+
+	color: var(--nav-button-selected-text-color);
+	background-color: var(--nav-button-selected-background);
+	transition: all .3s ease-in-out;
+}
+
+#aboutMe button:hover {
+	color: var(--nav-button-text-color);
+	background-color: var(--nav-button-background);
+}
+
+#alsoFoundAt{
+	display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
+    grid-column-gap: 0px;
+    grid-row-gap: 15px;
+
+	align-items: center;
+	justify-items: center;
+}
+
+#alsoFoundAt a {
+	padding: 5px;
+	letter-spacing: 4px;
+	font-family: var(--header-text-font);
+	font-size: 100%;
+
+	color: var(--nav-button-selected-text-color);
+	background-color: var(--nav-button-selected-background);
+	transition: all .3s ease-in-out;
+}
+
+#alsoFoundAt a:hover {
+	color: var(--nav-button-text-color);
+	background-color: var(--nav-button-background);
+}
+
+#alsoFoundAt #youtube{
+	width: 70%;
+	grid-area: 1 / 1 / 2 / 3; 
+}
+
+#alsoFoundAt span {
+	display: inline-block;
+	background-color: currentColor;
+}
+
+#alsoFoundAt #youtube span {
+	height: 1em;
+	width: 1.5em;
+	
+	mask-image: url("/media/site_components/yt_mask.png");
+	mask-size: 100% 100%;
+	mask-position: bottom center;
+	mask-repeat: repeat-x;
+}
+
+#alsoFoundAt #twitter{
+	width: 70%;
+	grid-area: 1 / 3 / 2 / 5; 
+}
+
+#alsoFoundAt #twitter span {
+	height: 1em;
+	width: 1em;
+	
+	mask-image: url("/media/site_components/twitter_mask.png");
+	mask-size: 100% 100%;
+	mask-position: bottom center;
+	mask-repeat: repeat-x;
+}
+
+#alsoFoundAt #twitter span + span {
+	height: 1em;
+	width: 1em;
+	
+	mask-image: url("/media/site_components/twitter_bad_mask.png");
+	mask-size: 100% 100%;
+	mask-position: bottom center;
+	mask-repeat: repeat-x;
+}
+
+#alsoFoundAt #discord{
+	width: 70%;
+	grid-area: 2 / 2 / 3 / 4; 
+}
+
+#alsoFoundAt #discord span {
+	height: 1em;
+	width: 1.3em;
+	
+	mask-image: url("/media/site_components/discord_mask.png");
+	mask-size: 100% 100%;
+	mask-position: bottom center;
+	mask-repeat: repeat-x;
+}
 
 /* PARALLAX */
 
