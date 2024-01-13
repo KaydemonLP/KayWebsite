@@ -1,0 +1,47 @@
+body {
+    text-align: left;
+}
+
+main {
+    padding: 0px;
+}
+
+.headerContainer {
+    display: grid;
+    width: 100%;
+    background-image:url("/media/site_components/banner/background.png");
+}
+
+.blogHeader {
+    justify-self:right;
+    font-size: 5em;
+    margin: 0.4em;
+}
+
+.blogContainer {
+    padding: 0.3em 3em;
+    height: max-content;
+    min-height: 100vh;
+}
+
+.blogTitle {
+    padding: 0.25em 0.25em 0em 0em;
+    margin: 0px;
+    font-size: 3em;
+}
+
+.blogDate {
+    font-size: 1.5em;
+    padding: 0.25em 0.25em 0em 0em;
+    text-shadow: unset;
+    font-weight: 400;
+}
+
+.blogTags {
+    padding: 0.1em;
+    font-weight: 400;
+}
+
+.blogImg {
+    margin: 0.5em;
+}

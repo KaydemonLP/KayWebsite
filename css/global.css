@@ -165,6 +165,7 @@ nav{
 
 .sticky + main {
   padding-top: 40px;
+  min-height: calc(100vh - 40px);
 }
 
 main{
@@ -174,6 +175,7 @@ main{
 	position: relative;
 	z-index: 15;
 	height: -webkit-fill-available;
+	min-height: 100vh;
 }
 
 #page {
@@ -211,7 +213,7 @@ main{
 	width: 100%;
 }
 
-#aboutMe button {
+#aboutMe .fancybutton {
 	border-width: 0px;
     border-style: none;
     border-color: none;
@@ -228,7 +230,24 @@ main{
 	transition: all .3s ease-in-out;
 }
 
-#aboutMe button:hover {
+#aboutMe .fancybutton_hover {
+	border-width: 0px;
+    border-style: none;
+    border-color: none;
+    border-image: none;
+
+	width: 80%;
+
+	letter-spacing: 4px;
+	font-family: var(--header-text-font);
+	font-size: 100%;
+
+	color: var(--nav-button-text-color);
+	background-color: var(--nav-button-background);
+	transition: all .3s ease-in-out;
+}
+
+#aboutMe .fancybutton:hover{
 	color: var(--nav-button-text-color);
 	background-color: var(--nav-button-background);
 }

@@ -1,5 +1,6 @@
 const { deepStrictEqual } = require("assert");
 const express = require("express");
+const { stringify } = require("querystring");
 ds = require("fs");
 
 const server = express();
@@ -12,12 +13,12 @@ server.use(express.json());
 
 var g_aLinks = [
 	/^\/(home)?$/,
-	"/test",
+	"/blogpost",
 ];
 
 var g_aFiles = [
 	"/html/home.html",
-	"/html/test.html",
+	"/templates/blogtemplate.html",
 ];
 
 server.use("/css", express.static(putanja + "/css"));
@@ -33,10 +34,16 @@ for( let i in g_aLinks )
 	});
 }
 
-server.get(/^\/(home)?$/, (zahtjev, odgovor) => {
-	let head = ds.readFileSync("/html/home.html", "utf-8");
+server.get("/blog/post", (zahtjev, odgovor) => {
+	let head = ds.readFileSync(putanja+"/templates/blogtemplate.html", "utf-8");
+
+	let titleIndex = head.search("<title>");
+	titleIndex += 7;
+
+	var txt2 = head.slice(0, titleIndex) + (zahtjev.query.id) + head.slice(titleIndex);
+
 	odgovor.type("html");
-	odgovor.write(head);
+	odgovor.write(txt2);
 	odgovor.end();
 });
 
