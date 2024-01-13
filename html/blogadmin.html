@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Blog Admin</title>
+<link rel="stylesheet" href="/css/global.css">
+<script src="/javascript/main.js"></script>
+</head>
+<body>
+
+<form id="forma" method="POST" action="/api/rezervacije" novalidate>
+<input type="text" id="title" name="title"> Title
+<input type="text" id="image" name="image"> Image
+<textarea id="markdown" name="markdown"></textarea> Markdown
+<select name="tags" id="tags" multiple>
+    <option value="Portfolio">Portfolio</option>
+    <option value="Blog">Blog</option>
+    <option value="Media">Media</option>
+    <option value="WIP">WIP</option>
+</select>
+<button type="submit">Submit</button>
+</form>
+
+</body>
+</html>

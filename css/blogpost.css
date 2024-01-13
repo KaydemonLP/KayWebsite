@@ -44,4 +44,5 @@ main {
 
 .blogImg {
     margin: 0.5em;
+    max-width: calc(100% - 1em);
 }

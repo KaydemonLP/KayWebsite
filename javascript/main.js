@@ -57,32 +57,30 @@ async function loadBlogEntriesIntoPreview( blogEntries, blogPreviews )
 	let blogList = [];
 	for( let blog of blogEntries["blogs"] )
 	{
-		await fetch( "/data/blog/" + blog["file"] ).then( (response) => response.json()).then( (json) => blogList.push(json) );
+		await fetch( "/data/blog/" + blog["file"] ).then( (response) => response.json()).then( 
+			function(json){
+			json["id"] = blog["id"];
+			blogList.push(json)
+		} );
 	}
 
 	let blogTemplate = "";
 	await fetch( "/templates/blogpreview.html" ).then( (response) => response.text().then((text) => blogTemplate = text));
 
-	let iPreviews = 0;
-
 	let sortedBlogs = new Array;
 
 	for( let blog of blogList )
 	{
-		if( iPreviews >= 6 )
-			break;
-
 		sortedBlogs.push( blog );
-		iPreviews++;
 	}
 
 	sortedBlogs.sort( (first,second) => Date.parse(second["date"]) - Date.parse(first["date"]) );
 
+	if( sortedBlogs.length > 6 )
+		sortedBlogs.length = 6;
+
 	for( let blog of sortedBlogs )
 	{
-		if( iPreviews >= 6 )
-			break;
-
 		for( let container of blogPreviews )
 		{
 			let newEntry = document.createElement("li");
@@ -90,12 +88,12 @@ async function loadBlogEntriesIntoPreview( blogEntries, blogPreviews )
 			newEntry.innerHTML = blogTemplate;
 			container.appendChild(newEntry);
 
-			onBlogRead( blog, newEntry );
+			onBlogRead( blog, newEntry, blog["id"] );
 		}
 	}
 }
 
-function onBlogRead( json, blogItem )
+function onBlogRead( json, blogItem, id )
 {
 	console.log(json["image"]);
 
@@ -105,6 +103,8 @@ function onBlogRead( json, blogItem )
 		return;
 
 	let blog = blogEntries[0];
+	blog.getElementsByTagName("a")[0].href = "/blog/post?id=" + id;
+	blog.getElementsByTagName("a")[1].href = "/blog/post?id=" + id;
 
 	if( json["image"] != undefined && json["image"].length != 0 )
 		blog.getElementsByTagName("img")[0].src = json["image"];
@@ -117,7 +117,10 @@ function onBlogRead( json, blogItem )
 		blog.removeChild(blog.getElementsByTagName("h3")[0]);
 
 	if( json["date"] != undefined && json["date"].length != 0 )
-		blog.getElementsByClassName("preview_date")[0].innerHTML = json["date"];
+	{
+		let date = new Date(json["date"]);
+		blog.getElementsByClassName("preview_date")[0].innerHTML = date.toLocaleDateString('default', { day: 'numeric', month: 'short', year: 'numeric' });
+	}
 	else
 		blog.removeChild(blog.getElementsByClassName("preview_date")[0]);
 
@@ -139,8 +142,6 @@ function onBlogRead( json, blogItem )
 	else
 		blog.removeChild(blog.getElementsByClassName("preview_tags")[0]);
 
-	let bLongerThanExpected = false;
-
 	if( json["content"] != undefined && json["content"].length != 0 )
 	{
 		let content = json["content"];
@@ -148,9 +149,6 @@ function onBlogRead( json, blogItem )
 	}
 	else
 		blog.removeChild(blog.getElementsByClassName("preview_content")[0]);
-
-	if( !bLongerThanExpected )
-		blog.removeChild(blog.getElementsByClassName("preview_readmore")[0]);
 }
 
 function startSite()
@@ -228,7 +226,5 @@ function startSite()
 		}
 	}
 }
-
-
 
 window.addEventListener("load", startSite);
