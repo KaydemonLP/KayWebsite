@@ -17,11 +17,13 @@ server.use(express.json());
 
 var g_aLinks = [
 	/^\/(home)?$/,
+	"/blog",
 	"/blogadmin",
 ];
 
 var g_aFiles = [
 	"/html/home.html",
+	"/html/blog.html",
 	"/html/blogadmin.html",
 ];
 
@@ -53,7 +55,19 @@ server.get("/blog/post", (zahtjev, odgovor) => {
 
 server.post("/api/rezervacije", (zahtjev, odgovor) => {
 	let podaci = zahtjev.body;
+
 	odgovor.type("json");
+
+	console.log(podaci["password"]);
+
+	if( podaci["password"] != "6ilvl48t4rH" )
+	{
+		odgovor.status(200);
+		odgovor.send(JSON.stringify({ poruka: "no." }));
+		return;
+	}
+
+	delete odgovor["password"];
 
 	let currentDate = new Date();
 	podaci["date"] = currentDate.toLocaleString();
@@ -90,8 +104,7 @@ server.post("/api/rezervacije", (zahtjev, odgovor) => {
 	(greska) => { if(greska) console.log(greska); });
 
 	odgovor.status(200);
-	odgovor.send(JSON.stringify({ poruka: "Podaci dodani" }));
-
+	odgovor.redirect( "/blog/post?id=" + id );
 });
 
 server.use((zahtjev, odgovor) => {

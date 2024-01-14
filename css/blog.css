@@ -1,0 +1,19 @@
+main {
+    padding: 0px;
+}
+
+.headerContainer {
+    display: grid;
+    width: 100%;
+    background-image:url("/media/site_components/banner/background.png");
+}
+
+.blogHeader {
+    justify-self:right;
+    font-size: 5em;
+    margin: 0.4em;
+}
+
+.blog_previews {
+    justify-content: space-between;
+}

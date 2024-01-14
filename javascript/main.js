@@ -76,13 +76,21 @@ async function loadBlogEntriesIntoPreview( blogEntries, blogPreviews )
 
 	sortedBlogs.sort( (first,second) => Date.parse(second["date"]) - Date.parse(first["date"]) );
 
-	if( sortedBlogs.length > 6 )
-		sortedBlogs.length = 6;
-
+	let iBlogIndex = 0;
 	for( let blog of sortedBlogs )
 	{
 		for( let container of blogPreviews )
 		{
+			let limit = container.dataset.limit;
+			if( limit != undefined && limit != -1 && iBlogIndex >= container.dataset.limit )
+			{
+				console.log("Skipping")
+				const index = blogPreviews.indexOf(container);
+				if (index > -1) { // only splice array when item is found
+					blogPreviews.splice(index, 1); // 2nd parameter means remove one item only
+				}
+				continue;
+			}
 			let newEntry = document.createElement("li");
 			newEntry.className = "blog_preview_item";
 			newEntry.innerHTML = blogTemplate;
@@ -90,6 +98,8 @@ async function loadBlogEntriesIntoPreview( blogEntries, blogPreviews )
 
 			onBlogRead( blog, newEntry, blog["id"] );
 		}
+
+		iBlogIndex++;
 	}
 }
 

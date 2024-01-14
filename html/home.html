@@ -29,28 +29,30 @@
 
 <div id="aboutMe">
 	<h1>ABOUT ME</h1>
-	<p>
-		Welcome! Welcome!<br>
-		<br>
-		I'm Kay! Often also known as KaydemonLP!<br>
-		It seems that you've happened across my website, so let me introduce myself a bit.<br>
-		I'm a young programmer, game dev and multimedia artist. <br>
-		<br>
-		Despite my age I've got some projects behind me already, my proudest so far being Open Fortres.<br>
-		<br>
-		Each day I try to progress my skills, be that programming, drawing, 3D modeling, VFX, animation, UX/UI design or perhaps learn something new! <br>
-	</p>
+	<div class="aboutMeText">
+		<p>
+			Welcome! Welcome!<br>
+			<br>
+			I'm Kay! Often also known as KaydemonLP!<br>
+			It seems that you've happened across my website, so let me introduce myself a bit.<br>
+			I'm a young programmer, game dev and multimedia artist. <br>
+			<br>
+			Despite my age I've got some projects behind me already, my proudest so far being Open Fortres.<br>
+			<br>
+			Each day I try to progress my skills, be that programming, drawing, 3D modeling, VFX, animation, UX/UI design or perhaps learn something new! <br>
+		</p>
 
-	<p>
-		Besides IT work I dabble a bit in handywork.<br>
-		Primarily related to clothes, like sewing and knitting.<br>
-		<br>
-		I mostly use it to modify clothes more to my liking, as the type of clothes and colors i like are hard to find!<br>
-		<br>
-		However, I do on occasion create things fromscratch, for example, plushies, or my favourite, cosplay!<br>
-		<br>
-		I tend to make things by hand, though I do have a sewing machine, which is handy.<br>
-	</p>
+		<p>
+			Besides IT work I dabble a bit in handywork.<br>
+			Primarily related to clothes, like sewing and knitting.<br>
+			<br>
+			I mostly use it to modify clothes more to my liking, as the type of clothes and colors i like are hard to find!<br>
+			<br>
+			However, I do on occasion create things fromscratch, for example, plushies, or my favourite, cosplay!<br>
+			<br>
+			I tend to make things by hand, though I do have a sewing machine, which is handy.<br>
+		</p>
+	</div>
 	<div id="writeMe">
 		<button type="button" class="fancyborder fancybutton">BUSINESS</button>
 		<img src="/media/site_components/writeMe.png" alt="Write me!">
@@ -60,10 +62,9 @@
 
 <div id="recently">
 	<h1>RECENTLY</h1>
-	<ul class="blog_previews" id="blog_previews">
+	<ul class="blog_previews" id="blog_previews" data-limit="3">
 	</ul>
-	<input type="radio" class="firstPageButton" name="blog_previews" checked>
-	<input type="radio" class="secondPageButton" name="blog_previews">
+	<div class="readMore"><a href="/blog">Read more...</a></div>
 </div>
 
 <div id="alsoFoundAt">
