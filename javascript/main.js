@@ -1,18 +1,5 @@
-const rgb2array = (rgb) => `${rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/).slice(1)}`.split(',');
-
-var g_navbar = null;
-var g_sticky = null;
-
-const RGBToHSB = (r, g, b) => {
-  r /= 255;
-  g /= 255;
-  b /= 255;
-  const v = Math.max(r, g, b),
-    n = v - Math.min(r, g, b);
-  const h =
-    n === 0 ? 0 : n && v === r ? (g - b) / n : v === g ? 2 + (b - r) / n : 4 + (r - g) / n;
-  return [60 * (h < 0 ? h + 6 : h), v && (n / v) * 100, v * 100];
-};
+var g_BlogEntries = null;
+var g_Tags = null;
 
 function castParallax()
 {
@@ -32,18 +19,6 @@ function castParallax()
 			var yPos = -(top * speed / 100);
 			layer.style.transform = 'translate3d(0px, ' + yPos + 'px, 0px)';
 		}
-
-		if( g_navbar )
-		{
-			if (window.pageYOffset >= g_sticky)
-			{
-				g_navbar.classList.add("sticky");
-			}
-			else
-			{
-				g_navbar.classList.remove("sticky");
-			}
-		}
 	});
 }
 
@@ -52,15 +27,25 @@ function dispelParallax() {
 	$("#parallax").css('display','none');
 }
 
+function findAndRemoveFromArray(array, element)
+{
+	const index = array.indexOf(element);
+	if (index > -1) { // only splice array when item is found
+	  array.splice(index, 1); // 2nd parameter means remove one item only
+	}
+
+	return array;
+}
+
 async function loadBlogEntriesIntoPreview( blogEntries, blogPreviews )
 {
 	let blogList = [];
-	for( let blog of blogEntries["blogs"] )
+	for( let blog of blogEntries )
 	{
 		await fetch( "/data/blog/" + blog["file"] ).then( (response) => response.json()).then( 
 			function(json){
-			json["id"] = blog["id"];
-			blogList.push(json)
+			json["tags"] = blog["tags"];
+			blogList.push(json);
 		} );
 	}
 
@@ -79,33 +64,72 @@ async function loadBlogEntriesIntoPreview( blogEntries, blogPreviews )
 	let iBlogIndex = 0;
 	for( let blog of sortedBlogs )
 	{
+		let containerIndex = -1;
 		for( let container of blogPreviews )
 		{
+			containerIndex++;
 			let limit = container.dataset.limit;
+			let filter = container.dataset.filtertag;
+
 			if( limit != undefined && limit != -1 && iBlogIndex >= container.dataset.limit )
 			{
-				console.log("Skipping")
-				const index = blogPreviews.indexOf(container);
-				if (index > -1) { // only splice array when item is found
-					blogPreviews.splice(index, 1); // 2nd parameter means remove one item only
-				}
 				continue;
 			}
+
+			let newTags = Array.from( blog["tags"] );
+			if( filter == "blog" )
+			{
+				for( removeTag of g_Tags["portfolio"] )
+					newTags = findAndRemoveFromArray(newTags, removeTag);
+
+				for( removeTag of g_Tags["media"] )
+					newTags = findAndRemoveFromArray(newTags, removeTag);
+			}
+			else if( filter == "portfolio" )
+			{
+				if( newTags.indexOf("Portfolio") == -1 )
+					continue;
+
+				for( removeTag of g_Tags["tags"] )
+					newTags = findAndRemoveFromArray(newTags, removeTag);
+
+			}
+			else if( filter == "media" )
+			{
+				if( newTags.indexOf("Media") == -1 )
+					continue;
+
+				for( removeTag of g_Tags["tags"] )
+					newTags = findAndRemoveFromArray(newTags, removeTag);
+			}
+
 			let newEntry = document.createElement("li");
 			newEntry.className = "blog_preview_item";
 			newEntry.innerHTML = blogTemplate;
 			container.appendChild(newEntry);
 
-			onBlogRead( blog, newEntry, blog["id"] );
+			newEntry.dataset.tags = "";
+			let first = true;
+			for( tag of blog["tags"] )
+			{
+				newEntry.dataset.tags += (first ? "" : ",") + tag;
+				first = false;
+			}
+
+			blog["tags"] = newTags;
+
+			onBlogRead( blog, newEntry, filter );
 		}
 
 		iBlogIndex++;
 	}
 }
 
-function onBlogRead( json, blogItem, id )
+function onBlogRead( json, blogItem, filter )
 {
-	console.log(json["image"]);
+	let id = json["id"];
+
+	blogItem.dataset.title = json["title"];
 
 	let blogEntries = blogItem.getElementsByClassName("blog_preview");
 
@@ -141,10 +165,12 @@ function onBlogRead( json, blogItem, id )
 		let first = json["tags"][0];
 		for( let tag of json["tags"] )
 		{
+			let link = '<a href="blog?tag=' + tag +'">' + tag + '</a>';
+
 			if( tag == first )
-				tagEntries += "<li>" + tag + "</li>";
+				tagEntries += "<li>" + link + "</li>";
 			else
-				tagEntries += "<li>" + ", " + tag + "</li>";
+				tagEntries += "<li>" + ", " + link + "</li>";
 		}
 
 		tagsContainer.innerHTML = tagEntries;
@@ -159,27 +185,73 @@ function onBlogRead( json, blogItem, id )
 	}
 	else
 		blog.removeChild(blog.getElementsByClassName("preview_content")[0]);
+
+	if( filter == "media" )
+	{
+		blog.removeChild(blog.getElementsByTagName("h3")[0].parentNode);
+		blog.getElementsByClassName("preview_date")[0].parentNode.removeChild(blog.getElementsByClassName("preview_date")[0]);
+		blog.removeChild(blog.getElementsByClassName("preview_content")[0]);
+	}
+	else if( filter == "portfolio" )
+	{
+		blog.getElementsByClassName("preview_date")[0].parentNode.removeChild(blog.getElementsByClassName("preview_date")[0]);
+	}
+}
+
+function loadTagsIntoSelect( tagList, tagSelects )
+{
+	for( let tagSelect of tagSelects )
+	{
+		let preselected = "";
+
+		let tagPools = tagSelect.dataset.taglist.split(",");
+		let tags = "";
+		for( let tagPool of tagPools )
+		{
+			for( let tag of tagList[tagPool] )
+			{
+				tags+= `<li><input id="${tag}" type="checkbox" name="tags" value="${tag}" onchange="filterTag(event)"><label for="${tag}">${tag}</label></li>`;
+			}
+		}
+		tagSelect.innerHTML = tags;
+		console.log(tagSelect);
+
+		if( tagSelect.dataset.preselected != undefined )
+		{
+			document.getElementById(tagSelect.dataset.preselected).checked = true;
+		}
+	}
+
+	filterTag();
+}
+
+async function loadDatabases()
+{
+	var blogPreviewPanels = document.getElementsByClassName("blog_previews");
+
+	if( blogPreviewPanels.length > 0 )
+	{
+		await fetch('/data/blog/blogentries.json').then((response) => response.json()).then((json) => g_BlogEntries = json["blogs"]);
+		await fetch('/data/blog/tags.json').then((response) => response.json()).then((json) => g_Tags = json);
+		await loadBlogEntriesIntoPreview(g_BlogEntries, blogPreviewPanels);
+	}
+
+	var tagSelectPanels = document.getElementsByClassName("tag_select");
+
+	if( tagSelectPanels.length > 0 )
+	{
+		if( g_Tags == null)
+			await fetch('/data/blog/tags.json').then((response) => response.json()).then((json) => g_Tags = json);
+
+		loadTagsIntoSelect(g_Tags, tagSelectPanels);
+	}
 }
 
 function startSite()
 {
 	var platform = navigator.platform.toLowerCase();
 	var userAgent = navigator.userAgent.toLowerCase();
-	/*
-	var colorableImages = document.getElementsByClassName("colorable-image");
 
-	for( let image of colorableImages )
-	{
-		let rgb = rgb2array(window.getComputedStyle(image).color);
-		let hsb = RGBToHSB( rgb[0], rgb[1], rgb[2] );
-
-		let filter = "invert(0.5) sepia(1) saturate(10000) brightness(10000) hue-rotate(0deg)";
-
-		filter += " hue-rotate(" + hsb[0] + "deg) saturate(" + hsb[1] / 100 + ") brightness(" + hsb[2] / 100 + ")";
-
-		image.style.filter = filter;
-	}
-*/
 	// Get the navbar
 	g_navbar = document.getElementById("navbar");
 
@@ -189,7 +261,8 @@ function startSite()
 		g_sticky = g_navbar.offsetTop;
 		fetch( "/templates/navbar.html" ).then( (response) => response.text().then((text) => g_navbar.innerHTML = text));
 	}
-
+/*
+	Keep paralax everywhere for now
 	if ( platform.indexOf('ipad') != -1  ||  platform.indexOf('iphone') != -1 )
 	{
 		dispelParallax();
@@ -198,17 +271,12 @@ function startSite()
 	{
 		castParallax();
 	}
-	else
+	else */
 	{
 		castParallax();
 	}
 
-	var blogPreviewPanel = document.getElementsByClassName("blog_previews");
-
-	if( blogPreviewPanel.length > 0 )
-	{
-		fetch('/data/blog/blogentries.json').then((response) => response.json()).then((json) => loadBlogEntriesIntoPreview(json, blogPreviewPanel));
-	}
+	loadDatabases();
 
 	let firstPagePreviewButtons = document.getElementsByClassName('firstPageButton');
 

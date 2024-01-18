@@ -104,7 +104,7 @@ h1, h2, h3 {
 	font-weight: 300;
 }
 
-html, body { min-height: 100%; }
+html, body { min-height: 100vh; background-color: var(--background-main-color); }
 
 
 html {
@@ -122,12 +122,13 @@ body {
 }
 
 nav{
-	position: relative;
+	position: sticky;
 	background-color: var(--background-main-color);
 	z-index: 1500;
 	padding: 10px 0px;
 	top: 0;
 	width: 100%;
+	height: 1em;
 }
 
 #navbar ul{
@@ -154,17 +155,6 @@ nav{
 #navbar ul li a:hover{
     color: var(--nav-button-selected-text-color);
     background-color: var(--nav-button-selected-background);
-}
-
-.sticky {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 1500;
-}
-
-.sticky + main {
-  padding-top: 40px;
 }
 
 main{
@@ -216,11 +206,13 @@ main{
 	width: 100%;
 }
 
-#aboutMe button {
+#aboutMe a {
 	border-width: 0px;
     border-style: none;
     border-color: none;
     border-image: none;
+
+	padding: 5px;
 
 	width: 80%;
 
@@ -233,7 +225,7 @@ main{
 	transition: all .3s ease-in-out;
 }
 
-#aboutMe button:hover {
+#aboutMe a:hover {
 	color: var(--nav-button-text-color);
 	background-color: var(--nav-button-background);
 }
@@ -440,8 +432,8 @@ main{
 
 .blog_preview_item {
     display: inline-block;
-	width: 30%;
-	height: 500px;
+    flex-basis: 13.3em;
+    height: 25.3em;
 	margin: 10px;
 
 	overflow: initial;
@@ -452,8 +444,8 @@ main{
 
 .blog_preview_item:hover {
     display: inline-block;
-	width: calc(30% + 20px);
-	height: 520px;
+	flex-basis: calc(13.3em + 20px);
+	height: calc(25.3em + 20px);
 	margin: 0px;
 }
 
@@ -464,10 +456,19 @@ main{
 	overflow: hidden;
 	height: 100%;
 	display: grid;
-	grid-template-columns: repeat(2, 1fr);
+	grid-template-columns: 1fr;
 	grid-template-rows: 48% 10% 6% 30% 6%;
 	grid-column-gap: 0px;
 	grid-row-gap: 0px;
+}
+
+.preview_image {
+	height: 100%;	
+}
+
+.blog_preview a {
+	grid-area: 1 / 1 / 2 / 3;
+	justify-self: center;
 }
 
 .blog_preview a h3 {
@@ -484,27 +485,24 @@ main{
 	align-self: center;
 }
 
-.preview_image {
-	height: 100%;	
-}
-
-.blog_preview a {
-	grid-area: 1 / 1 / 2 / 3;
-	justify-self: center;
+.preview_tagdate {
+    display: flex;
+    position: relative;
+    grid-area: 3 / 1 / 4 / 2;
+    align-items: center;
 }
 
 .preview_date {
-	justify-self: left;
-	align-self: center;
+	position: absolute;
+	left:0;
 	padding-left: 10px;
-	grid-area: 3 / 1 / 4 / 2;
 }
 
 .preview_tags {
-	justify-self: right;
-	align-self: center;
+	position: absolute;
+	right: 0;
 	padding-right: 10px;
-	grid-area: 3 / 2 / 4 / 3;
+
 }
 
 .preview_tags li {

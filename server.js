@@ -17,13 +17,15 @@ server.use(express.json());
 
 var g_aLinks = [
 	/^\/(home)?$/,
-	"/blog",
+	"/portfolio",
+	"/media",
 	"/blogadmin",
 ];
 
 var g_aFiles = [
 	"/html/home.html",
-	"/html/blog.html",
+	"/html/portfolio.html",
+	"/html/media.html",
 	"/html/blogadmin.html",
 ];
 
@@ -50,6 +52,26 @@ server.get("/blog/post", (zahtjev, odgovor) => {
 
 	odgovor.type("html");
 	odgovor.write(txt2);
+	odgovor.end();
+});
+
+server.get("/blog", (zahtjev, odgovor) => {
+	let head = ds.readFileSync(putanja+"/html/blog.html", "utf-8");
+
+	if( zahtjev.query.tag != undefined )
+	{
+		let selectIndex = head.search('class="tag_select"');
+		selectIndex += 19;
+
+		let preselected = 'data-preselected="';
+		preselected +=  (zahtjev.query.tag);
+		preselected += '"';
+
+		var txt2 = head.slice(0, selectIndex) + preselected + head.slice(selectIndex);
+		head = txt2;
+	}
+	odgovor.type("html");
+	odgovor.write(head);
 	odgovor.end();
 });
 

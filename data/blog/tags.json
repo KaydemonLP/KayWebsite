@@ -1,8 +1,18 @@
 {"tags": 
 [
 	"Portfolio",
-	"Blog"
-	"Media",
+	"Blog",
+	"Media"
+],
+"portfolio": [
+	"Programming",
+	"Leadership",
+	"Ui Design",
+	"Drawing"
+],
+"media": [
 	"WIP",
+	"OC",
+	"Fanart"
 ]
 }

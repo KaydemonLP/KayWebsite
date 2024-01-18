@@ -16,7 +16,7 @@ function loadBlogInfo(blogInfo)
     let first = true;
     for( let tag of tags )
     {
-        tagsString += '<b><a href="blog/tag/' + tag +'">' + (!first ? ' | ' : "") + tag + '</a></b>';
+        tagsString += '<b><a href="/blog?tag=' + tag +'">' + (!first ? ' | ' : "") + tag + '</a></b>';
         first = false;
 
         if( tag == "Portfolio" )
@@ -63,6 +63,8 @@ async function startBlog()
         window.location.replace("/blog");
         return;
     }
+
+    blogInfo["tags"] = blog["tags"];
 
     loadBlogInfo(blogInfo);
 }
