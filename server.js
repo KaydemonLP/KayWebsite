@@ -5,6 +5,8 @@ const showdown = require("showdown");
 ds = require("fs");
 var converter = new showdown.Converter();
 
+var password = require("./password.js").password;
+
 var g_BlogEntries = require("./data/blog/blogentries.json");
 
 const server = express();
@@ -82,7 +84,7 @@ server.post("/api/rezervacije", (zahtjev, odgovor) => {
 
 	console.log(podaci["password"]);
 
-	if( podaci["password"] != "6ilvl48t4rH" )
+	if( podaci["password"] != password )
 	{
 		odgovor.status(200);
 		odgovor.send(JSON.stringify({ poruka: "no." }));
