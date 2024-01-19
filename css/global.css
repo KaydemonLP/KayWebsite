@@ -11,8 +11,11 @@ a, a:link, a:visited { color: inherit; text-decoration: inherit; }
 :root {
     --normal-text-font: 'Rajdhani';
     --header-text-font: 'Limelight';
+	--fancy-link-font: 'Verlag';
 
     --header-text-color: #EEDDA8;
+	--fancy-link-text-color: #7c04bd;
+	--link-text-color: #e88129;
 
     --background-main-color: #100021;
     --background-main-lighter: #AA2CEB;
@@ -220,8 +223,9 @@ main{
 	width: 80%;
 
 	letter-spacing: 4px;
-	font-family: var(--header-text-font);
+	font-family: var(--fancy-link-font);
 	font-size: 100%;
+	font-weight: 600;
 
 	color: var(--nav-button-selected-text-color);
 	background-color: var(--nav-button-selected-background);
@@ -246,8 +250,9 @@ main{
 #alsoFoundAt a {
 	padding: 5px;
 	letter-spacing: 4px;
-	font-family: var(--header-text-font);
+	font-family: var(--fancy-link-font);
 	font-size: 100%;
+	font-weight: 600;
 
 	color: var(--nav-button-selected-text-color);
 	background-color: var(--nav-button-selected-background);
@@ -422,8 +427,17 @@ main{
 .readMore {
 	width: 100%;
 	text-align: right;
+	color: var(--link-text-color);
+	font-weight: 600;
 }
 
+.readMore:link {
+	color: var(--link-text-color);
+}
+
+.readMore:visited {
+	color: var(--link-text-color);
+}
 /*
 	Blog preview
 */
@@ -463,6 +477,16 @@ main{
 	grid-template-rows: 48% 10% 6% 30% 6%;
 	grid-column-gap: 0px;
 	grid-row-gap: 0px;
+}
+
+.taglink:link {
+	color: var(--fancy-link-text-color);
+	font-weight: 600;
+}
+
+.taglink:visited {
+	color: var(--fancy-link-text-color);
+	font-weight: 600;
 }
 
 .preview_image {
@@ -542,11 +566,6 @@ main{
     height: 1em;
     margin-top: 0.2em;
     background: inherit;
-}
-
-.preview_readmore {
-	text-align: right;
-	grid-area: 5 / 2 / 6 / 3;
 }
 
 #frog_video {

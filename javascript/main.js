@@ -165,7 +165,7 @@ function onBlogRead( json, blogItem, filter )
 		let first = json["tags"][0];
 		for( let tag of json["tags"] )
 		{
-			let link = '<a href="blog?tag=' + tag +'">' + tag + '</a>';
+			let link = '<a class="taglink" href="blog?tag=' + tag +'">' + tag + '</a>';
 
 			if( tag == first )
 				tagEntries += "<li>" + link + "</li>";
