@@ -32,13 +32,29 @@ main {
     z-index: 4000;
     width: 15%;
     float: right;
-    translate: -15px;
+    translate: -15px 15px;
     text-align: left;
+
+    background-color: var(--nav-button-selected-background);
+    padding: 1%;
+    color: var(--nav-button-selected-text-color);
 }
 
 #searchname {
     width: 70%;
     padding: 4% 10% 4% 10%;
-    border: 1px solid rgba(0, 0, 0, 0.25) !important;
+    margin-bottom: 10px;
+    border: 1px solid  var(--nav-button-background) !important;
+    color: var(--nav-button-selected-text-color);
     border-radius: 25px;
+}
+
+input[type="checkbox" i] {
+    background-color: var(--nav-button-selected-background);
+    accent-color: var(--nav-button-background);
+}
+
+input[type="checkbox" i]:hover {
+    background-color: var(--nav-button-background);
+    accent-color: var(--nav-button-selected-background);
 }

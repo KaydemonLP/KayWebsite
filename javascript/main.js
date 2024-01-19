@@ -306,3 +306,28 @@ function startSite()
 }
 
 window.addEventListener("load", startSite);
+
+function openMail(event)
+{
+	let mailContainer = document.getElementsByClassName("mailcontainer")[0];
+
+	mailContainer.style.display = "";
+	mailContainer.getElementsByClassName("mailheader")[0].innerHTML = "New message ~" + event.srcElement.innerHTML + "~";
+}
+
+function closeMail(event)
+{
+	let mailContainer =	event.srcElement.parentElement.parentElement;
+	mailContainer.style.display = "none"
+}
+
+function sendMail(event)
+{
+	let mailContainer =	event.srcElement.parentElement.parentElement;
+	mailContainer.getElementsByClassName("subject")[0].value = "";
+	mailContainer.getElementsByClassName("sender")[0].value = "";
+	mailContainer.getElementsByClassName("mailText")[0].value = "";
+	mailContainer.getElementsByClassName("mailText")[0].innerHTML = "";
+
+	closeMail(event);
+}

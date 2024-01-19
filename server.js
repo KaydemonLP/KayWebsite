@@ -19,14 +19,14 @@ var g_aLinks = [
 	/^\/(home)?$/,
 	"/portfolio",
 	"/media",
-	"/blogadmin",
+	"/blogadmin"
 ];
 
 var g_aFiles = [
 	"/html/home.html",
 	"/html/portfolio.html",
 	"/html/media.html",
-	"/html/blogadmin.html",
+	"/html/blogadmin.html"
 ];
 
 server.use("/css", express.static(putanja + "/css"));
@@ -90,12 +90,15 @@ server.post("/api/rezervacije", (zahtjev, odgovor) => {
 	}
 
 	delete odgovor["password"];
+	delete podaci["password"];
 
 	let currentDate = new Date();
-	podaci["date"] = currentDate.toLocaleString();
+	podaci["date"] = currentDate.toDateString();
 
-	if( typeof(podaci["tags"]) != Array )
+	if( typeof(podaci["tags"]) != Object )
 		podaci["tags"] = [podaci["tags"]];
+
+	let tags = podaci["tags"];
 
 	var html = converter.makeHtml(podaci["markdown"]);
 	delete podaci["markdown"];
@@ -108,6 +111,9 @@ server.post("/api/rezervacije", (zahtjev, odgovor) => {
 
 	let id = g_BlogEntries["blogs"].length;
 
+	podaci["id"] = id;
+	delete podaci["tags"];
+
 	ds.writeFile(putanja+'/data/blog/blogentry_'+id+'.json',
 	JSON.stringify(podaci),
 	{flag: 'w+'},
@@ -115,7 +121,8 @@ server.post("/api/rezervacije", (zahtjev, odgovor) => {
 
 	let newEntry = {
 		"id": id,
-		"file": 'blogentry_'+id+".json"
+		"file": 'blogentry_'+id+".json",
+		"tags": tags
 	};
 
 	g_BlogEntries["blogs"].push(newEntry);

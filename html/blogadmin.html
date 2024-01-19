@@ -4,22 +4,19 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Blog Admin</title>
 <link rel="stylesheet" href="/css/global.css">
+<link rel="stylesheet" href="/css/blogadmin.css">
 <script src="/javascript/main.js"></script>
 </head>
 <body>
 
 <form id="forma" method="POST" action="/api/rezervacije" novalidate>
-<input type="text" id="title" name="title"> Title
-<input type="text" id="image" name="image"> Image
-<textarea id="markdown" name="markdown"></textarea> Markdown
-<select name="tags" id="tags" multiple>
-    <option value="Portfolio">Portfolio</option>
-    <option value="Blog">Blog</option>
-    <option value="Media">Media</option>
-    <option value="WIP">WIP</option>
-</select>
-<input type="text" id="password" name="password"> Password
-<button type="submit">Submit</button>
+<input type="text" id="title" name="title"> Title <br>
+<input type="text" id="image" name="image"> Image<br>
+<textarea id="markdown" name="markdown"></textarea> Markdown<br>
+<ul class="tag_select" data-taglist="tags,portfolio,media">
+</ul><br>
+<input type="text" id="password" name="password"> Password<br>
+<button type="submit">Submit</button><br>
 </form>
 
 </body>

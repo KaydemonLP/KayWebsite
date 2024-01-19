@@ -4,6 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Kay - Home</title>
 <link rel="stylesheet" href="/css/global.css">
+<link rel="stylesheet" href="/css/mail.css">
 <script src="/javascript/main.js"></script>
 </head>
 <body>
@@ -54,9 +55,22 @@
 		</p>
 	</div>
 	<div id="writeMe">
-		<a href="mailto: kaydemonlp@gmail.com" type="button" class="fancyborder fancybutton">BUSINESS</a>
+		<button onclick="openMail(event)" type="button" class="fancyborder fancybutton">BUSINESS</button>
 		<img src="/media/site_components/writeMe.png" alt="Write me!">
-		<a href="mailto: kaidemonlp@gmail.com" type="button" class="fancyborder fancybutton">CASUAL</a>
+		<button onclick="openMail(event)" type="button" class="fancyborder fancybutton">CASUAL</button>
+	</div>
+</div>
+
+<div class="mailcontainer" style="display:none;">
+	<div class="mailheader">
+		New Message
+	</div>
+	<input class="subject" type="text" placeholder="Subject">
+	<input class="sender" type="text" placeholder="Sender Email">
+	<textarea class="mailText"></textarea>
+	<div class="mailbuttonContainer">
+		<button type="button" onclick="sendMail(event)">Send</button>
+		<button type="button" onclick="closeMail(event)">Cancel</button>
 	</div>
 </div>
 

@@ -3,7 +3,8 @@ var g_BlogID = -1;
 function loadBlogInfo(blogInfo)
 {
     let title = blogInfo["title"];
-    let date = new Date(blogInfo["date"]);
+    console.log(blogInfo["date"]);
+    let date = new Date();
     let tags = blogInfo["tags"];
 	let image = blogInfo["image"];
 	let content = blogInfo["content"];
